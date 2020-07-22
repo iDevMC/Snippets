@@ -1,0 +1,32 @@
+variables:
+	{build.%player%} = false;
+
+options: 
+	permission: starplum.build
+	message: &5&lStarplum &8➥ &fYou don't have permission to use this command !
+	enabled: &5&lStarplum &8➥ &fYour build mode has been &a&lenabled
+	disabled: &5&lStarplum &8➥ &fYour build mode has been &c&ldisabled
+
+
+command /build [<text>]:
+	permission: {@permission}
+	permission message: {@message}
+	trigger:
+		if {build.%player%} is not set:
+			set {build.%player%} to true
+			send "{@enabled}" to player
+		if {build.%player%} is false:
+			set {build.%player%} to true 
+			send "{@enabled}" to player
+		if {build.%player%} is true:
+			set {build.%player%} to false
+			send "{@disabled}" to player
+
+
+on break:
+	if {build.%player%} is false:
+		cancel event
+
+on place:
+	if {build.%player%} if false:
+		cancel event
